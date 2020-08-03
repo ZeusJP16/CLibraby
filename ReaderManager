@@ -1,0 +1,559 @@
+#include "ReaderManager.h"
+
+//一番大きな読者人数を宣言する
+#define MaxR 1000
+
+//読者管理情報の配列を初期化
+char RCode[MaxR][25], Name[MaxR][25], ID[MaxR][25], Bthday[MaxR][25], Sex[MaxR][25], Email[MaxR][25], Addr[MaxR][25];
+
+int day[MaxR];
+int month[MaxR];
+int year[MaxR];
+
+int Endofday[MaxR];
+int Endofmonth[MaxR];
+int Endofyear[MaxR];
+
+int m = 0;//読者変数を初期化
+
+/*-------------読者カードを作るの日の入力関数-------------*/
+//入力:要りません
+//出力:読者カードを作るの日
+
+void DayMakeCard()
+{
+	printf("\n");
+
+	printf("読者カードを作るの日: ");
+	scanf("%d", &day[m]);
+
+	printf("読者カードを作るの月: ");
+	scanf("%d", &month[m]);
+
+	printf("読者カードを作るの年: ");
+	scanf("%d", &year[m]);
+}
+
+/*-------------読者カードを満期日の入力関数-------------*/
+//Input: day[MaxR]; month[MaxR]; year[MaxR];
+//Output: Endofday[MaxR]; Endofmonth[MaxR]; Endofyear[MaxR];
+
+void Endoftime()
+{
+	Endofday[m] = day[m];
+	Endofmonth[m] = month[m];
+	Endofyear[m] = year[m] + 4;
+}
+
+/*------------------------------------------------------------------------------------------------------------------------------*/
+
+/*-------------読者情報を示す関数-------------*/
+//Input:RCode[MaxR][25]; Name[MaxR][25]; ID[MaxR][25]; Bthday[MaxR][25]; Sex[MaxR][25]; Email[MaxR][25]; Addr[MaxR][25];
+//Output:読者情報
+
+/*-------------読者の最初の情報を入力する関数-------------*/
+/*
++)入力:
+RCode[MaxR][25], Name[MaxR][25], ID[MaxR][25], Bthday[MaxR][25], Sex[MaxR][25], Email[MaxR][25], Addr[MaxR][25];
++)出力:
+読者の最初の情報
+*/
+
+void RInput()
+{
+	while (true)
+	{
+		if (m >= MaxR)
+			printf("読者情報を入力の記憶が足りないです。");
+		else
+		while (m < MaxR)
+		{
+
+			printf("\n--------------------> 読者%dの情報 <--------------------", m + 1);
+			fflush(stdin);
+
+			//読者の情報を入力:
+			printf("読者%dの情報: ", m + 1);
+			gets(RCode[m]);
+
+
+			//読者の名前:
+			printf("読者%dの名前: ", m + 1);
+			gets(Name[m]);
+
+			//読者のID:
+			printf("読者%dのID: ", m + 1);
+			gets(ID[m]);
+
+			//読者の生年月日:
+			printf("読者%dの生年月日: ", m + 1);
+			gets(Bthday[m]);
+
+			//読者の性:
+			printf("読者%dの性: ", m + 1);
+			gets(Sex[m]);
+
+			//読者のメール:
+			printf("読者%dのメール: ", m + 1);
+			gets(Email[m]);
+
+			//読者の住所:
+			printf("読者%dの住所: ", m + 1);
+			gets(Addr[m]);
+
+			//読者カードを作るの日:
+			printf("読者カードを作るの日: ");
+			DayMakeCard();
+
+			//自動で読者カードの満期日:
+			Endoftime();
+
+			m++;
+			break;
+		}
+	}
+}
+
+void RCheck()
+{
+	if (m <= 0)
+	{
+		printf("データの中に、この読者の情報がありません。読者情報を追加してください。\n");
+	}
+	else
+	{
+		for (int i = 0; i < m; i++)
+		{
+			printf("\n--------------------> 読者%dの情報 <--------------------\n", i + 1);
+
+			//読者コードを示す:
+			printf("\n読者%dのコード: ", i + 1);
+			puts(RCode[i]);
+
+			//読者の名前を示す:
+			printf("読者%dの名前: ", i + 1);
+			puts(Name[i]);
+
+			//読者IDを示す:
+			printf("読者%dのID: ", i + 1);
+			puts(ID[i]);
+
+			//読者の生年月日を示す:
+			printf("読者%dの生年月日: ", i + 1);
+			puts(Bthday[i]);
+
+			//読者の性を示す:
+			printf("読者%dの性: ", i + 1);
+			puts(Sex[i]);
+
+			//読者のメールアドレスを示す:
+			printf("読者%dのメールアドレス: ", i + 1);
+			puts(Email[i]);
+
+			//読者の住所を示す:
+			printf("読者%dの住所: ", i + 1);
+			puts(Addr[i]);
+
+			//読者カードを作る日を示す:
+			printf("読者%dの読者カードを作る日: %d-%d-%d", i + 1, day[i], month[i], year[i]);
+
+			//読者カードの満期日:
+			printf("\n読者%dの読者カードの満期日: %d-%d-%d\n", i + 1, Endofday[i], Endofmonth[i], Endofyear[i]);
+
+		}
+	}
+}
+
+/*-------------読者を追加関数-------------*/
+//Input:RCode[MaxR][25]; Name[MaxR][25]; ID[MaxR][25]; Bthday[MaxR][25];Sex[MaxR][25]; Email[MaxR][25]; Addr[MaxR][25];
+//Output:読者の最初の情報
+void RAdd()
+{
+	while (true)
+	{
+		printf("\n=====================> 読者追加メーニュ <=====================\n");
+		printf("\t121.	追加終わり。\n");
+		printf("\t122.	読者情報を追加する。\n");
+		printf("\n=============================================================================\n");
+
+		int select;
+		printf("\nメーニュを選びなさい： ");
+		scanf("%d", &select);
+		if (select != 121 && select != 122)
+			printf("もう一度選びなさい!!!");
+
+		if (select == 121)//追加終り
+			break;
+		if (select == 122)//読者情報を追加続く
+		{
+			if (m >= MaxR)
+				printf("読者情報を追加記憶が足りないです!!");
+			else
+			while (m < MaxR)
+			{
+				printf("\n--------------------> 読者%dの情報 <--------------------", m + 1);
+				fflush(stdin);//xoa bo nho dem truoc do
+
+				//読者コードを追加する:
+				printf("\n読者%dのコード: ", m + 1);
+				gets(RCode[m]);
+
+				//読者の名前を追加する:
+				printf("読者%dの名前: ", m + 1);
+				gets(Name[m]);
+
+				//読者IDを追加する:
+				printf("読者%dのID: ", m + 1);
+				gets(ID[m]);
+
+				//読者の生年月日を追加する:
+				printf("読者%dの生年月日: ", m + 1);
+				gets(Bthday[m]);
+
+				//読者の性を追加する:
+				printf("読者%dの性: ", m + 1);
+				gets(Sex[m]);
+
+				//読者のメールアドレスを追加する:
+				printf("読者%dのメールアドレス: ", m + 1);
+				gets(Email[m]);
+
+				// 読者の住所を追加する:
+				printf("読者%dの住所: ", m + 1);
+				gets(Addr[m]);
+
+				//読者カードを作る日を追加する：
+				printf("読者%dの読者カードを作る日: ", m + 1);
+				DayMakeCard();
+
+				//満期日を自動で挿入:
+				Endoftime();
+
+				m++;
+				break;
+			}
+		}
+	}
+}
+
+/*--------------------------------------------------------------------------------------------------------------------------------*/
+
+/*-------------読者情報を修正関数-------------*/
+//Input:情報を修正したい読者の番号(k)
+//Output:修正した読者情報
+void RRepair(int k)
+{
+
+	if (k >= 0 && k <= m)
+	{
+		printf("\n=====================> 読者情報を修正メーニュ <=====================\n");
+		printf("\t131.	読者コードを修正する。\n");
+		printf("\t132.	読者の名前を修正する。\n");
+		printf("\t133.	読者IDを修正する。\n");
+		printf("\t134.	読者の生年月日を修正する。\n");
+		printf("\t135.	読者の性を修正する。\n");
+		printf("\t136.	読者のメールアドレスを修正する。\n");
+		printf("\t137.	読者の住所を修正する。\n");
+		printf("\t138.	読者カードを作る日を修正する。\n");
+		printf("=============================================================================\n");
+
+		int select;
+		printf("\nメーニュを選びなさい： ");
+		scanf("%d", &select);
+
+		if (select == 138)
+		{
+			int repd, repm, repy;
+
+			printf("\n--------------------> 修正したい内容 <--------------------\n");
+			printf("Day made card: ");
+			scanf("%d", &repd);
+			printf("Month made card: ");
+			scanf("%d", &repm);
+			printf("Year made card: ");
+			scanf("%d", &repy);
+
+			day[k] = repd;//読者kの読者カードを作る日はrepdで更新する
+			month[k] = repm;//読者kの読者カードを作る月はrepmで更新する
+			year[k] = repy;//読者kの読者カードを作る年はrepyで更新する
+
+			Endofday[k] = repd;
+			Endofmonth[k] = repm;
+			Endofyear[k] = repy + 4;
+
+		}
+		else
+		{
+			fflush(stdin);
+			char repair[25];
+			printf("修正する情報を入力してください: ");
+			gets(repair);
+
+			switch (select)//strcpy関数で読者情報にrepair文字列の内容をコピーする
+			{
+			case 131:
+				strcpy(RCode[k - 1], repair);
+				break;
+			case 132:
+				strcpy(Name[k - 1], repair);
+				break;
+			case 133:
+				strcpy(ID[k - 1], repair);
+				break;
+			case 134:
+				strcpy(Bthday[k - 1], repair);
+				break;
+			case 135:
+				strcpy(Sex[k - 1], repair);
+				break;
+			case 136:
+				strcpy(Email[k - 1], repair);
+				break;
+			case 137:
+				strcpy(Addr[k - 1], repair);
+				break;
+			default:
+				printf("選んだ修正内容が存在しません。他のオプシオンを選びなさい!!");
+				break;
+			}
+		}
+
+	}
+	else
+		printf("データが正しくないです。もう一度やり直してください!!");
+}
+
+/*-------------修正した読者情報を示す関数-------------*/
+
+//Input: 修正した読者情報を見たいものの番号 (k)
+//Output: 修正した読者情報
+void RRepaired(int k)
+{
+	printf("\n=====================> 読者%dの修正した情報 <=====================\n", k);
+
+	//読者コードを示す:
+	printf("\n読者%dのコード: ", k);
+	puts(RCode[k - 1]);
+
+	//読者の名前を示す:
+	printf("読者%dの名前: ", k);
+	puts(Name[k - 1]);
+
+	//読者IDを示す:
+	printf("読者%dのID: ", k);
+	puts(ID[k - 1]);
+
+	//読者の生年月日を示す:
+	printf("読者%dの生年月日: ", k);
+	puts(Bthday[k - 1]);
+
+	//読者の性を示す:
+	printf("読者%dの性: ", k);
+	puts(Sex[k - 1]);
+
+	//読者のメールアドレスを示す:
+	printf("読者%dのメールアドレス: ", k);
+	puts(Email[k - 1]);
+
+	//読者の住所を示す:
+	printf("読者%dの住所: ", k);
+	puts(Addr[k - 1]);
+
+	//読者カードを作る日を示す:
+	printf("読者%dの読者カードを作る日: %d-%d-%d", k, day[k], month[k], year[k]);
+
+	//読者カードの満期日を示す:
+	printf("\n読者%dの読者カードの満期日: %d-%d-%d\n", k, Endofday[k], Endofmonth[k], Endofyear[k]);
+
+}
+
+
+/*-------------読者情報を修正するメーニュ関数-------------*/
+//Input:修正したい読者情報の番号(k)
+//Output:修正するメーニュ
+void RepairMenu(int k)
+{
+	while (true)
+	{
+		printf("\n==================> 読者情報を修正するメーニュ <==================\n");
+		printf("\t140.	修正終わり.\n");
+		printf("\t141.	読者%dの情報を修正続く。\n", k);
+		printf("\t142.	修正した読者情報を示す。\n");
+		printf("==================================================================================\n");
+
+		int select;
+		printf("\nメーニュを選びなさい：");
+		scanf("%d", &select);
+
+		if (select == 140)
+			break;
+		switch (select)
+		{
+		case 141:
+			RRepair(k);
+			break;
+		case 142:
+			RRepaired(k);
+			break;
+		default:
+			printf("オプシオンが正しくないです。他のオプシオンを選びなさい!!");
+			break;
+		}
+	}
+}
+
+
+/*-------------読者情報を消す関数-------------*/
+//Input: RCode[MaxR][25]; Name[MaxR][25]; ID[MaxR][25]; Bthday[MaxR][25]; Sex[MaxR][25]; Email[MaxR][25]; Addr[MaxR][25]; day[]; month[]; year[]; Endofday[]; Endofmonth[]; Endofyear[].
+//Output: 一つ読者情報を消したもの
+void RDelete(int j)
+{
+	int flag = 0;
+	if (j > 0 && j <= m)
+	{
+		for (int i = j - 1; i < m - 1; i++)
+		{
+			strcpy(RCode[i], RCode[i + 1]);
+			strcpy(Name[i], Name[i + 1]);
+			strcpy(ID[i], ID[i + 1]);
+			strcpy(Bthday[i], Bthday[i + 1]);
+			strcpy(Sex[i], Sex[i + 1]);
+			strcpy(Email[i], Email[i + 1]);
+			strcpy(Addr[i], Addr[i + 1]);
+
+			day[i] = day[i + 1];
+			month[i] = month[i + 1];
+			year[i] = year[i + 1];
+
+			Endofday[i] = Endofday[i + 1];
+			Endofmonth[i] = Endofmonth[i + 1];
+			Endofyear[i] = Endofyear[i + 1];
+		}
+		m--;
+		flag = 1;
+	}
+	if (flag == 1)
+	{
+		printf("\n=====================> 消した後の一覧読者情報 <=====================\n");
+		RCheck();
+	}
+	else
+		printf("消せないです。もう一度やり直してください!!");
+}
+
+/*-------------IDで読者情報を調べる関数-------------*/
+//Input:調べたい読者情報のID: ID[25]
+//Output:調べたい読者情報
+void SearchID(char *ID[25])
+{
+	int flag = 0;
+	for (int i = 0; i < m; i++)
+	{
+		if (strcmp(ID[i], *ID) == 0)
+		{
+			printf("\n=====================> 調べたい読者情報 <=====================\n");
+			//読者コードを示す:
+			printf("\n読者%dのコード: ", i + 1);
+			puts(RCode[i]);
+
+			//読者の名前を示す:
+			printf("読者%dの名前: ", i + 1);
+			puts(Name[i]);
+
+			//読者IDを示す:
+			printf("読者%dのID: ", i + 1);
+			puts(ID[i]);
+
+			//読者の生年月日を示す:
+			printf("読者%dの生年月日: ", i + 1);
+			puts(Bthday[i]);
+
+			//読者の性を示す:
+			printf("読者%dの性: ", i + 1);
+			puts(Sex[i]);
+
+			//読者のメールアドレスを示す:
+			printf("読者%dのメールアドレス: ", i + 1);
+			puts(Email[i]);
+
+			//読者の住所を示す:
+			printf("読者%dの住所: ", i + 1);
+			puts(Addr[i]);
+
+			//読者カードを作る日を示す:
+			printf("読者%dの読者カードを作る日: %d-%d-%d", i + 1, day[i], month[i], year[i]);
+
+			//読者カードの満期日:
+			printf("\n読者%dの読者カードの満期日: %d-%d-%d\n", i + 1, Endofday[i], Endofmonth[i], Endofyear[i]);
+
+			flag = 1;
+		}
+	}
+	if (flag != 1)
+		printf("\n調べられない!!!");
+}
+
+/*-------------名前で読者情報を調べる関数-------------*/
+//Input: 調べたい読者情報の名前
+//Output: 調べたい読者情報
+void SearchName(char name[25])
+{
+	int flag = 0;
+	for (int i = 0; i < m; i++)
+	{
+		if (strcmp(Name[i], name) == 0)
+		{
+
+			printf("\n=====================> 調べたい読者情報 <=====================\n");
+			//読者コードを示す:
+			printf("\n読者%dのコード: ", i + 1);
+			puts(RCode[i]);
+
+			//読者の名前を示す:
+			printf("読者%dの名前: ", i + 1);
+			puts(Name[i]);
+
+			//読者IDを示す:
+			printf("読者%dのID: ", i + 1);
+			puts(ID[i]);
+
+			//読者の生年月日を示す:
+			printf("読者%dの生年月日: ", i + 1);
+			puts(Bthday[i]);
+
+			//読者の性を示す:
+			printf("読者%dの性: ", i + 1);
+			puts(Sex[i]);
+
+			//読者のメールアドレスを示す:
+			printf("読者%dのメールアドレス: ", i + 1);
+			puts(Email[i]);
+
+			//読者の住所を示す:
+			printf("読者%dの住所: ", i + 1);
+			puts(Addr[i]);
+
+			//読者カードを作る日を示す:
+			printf("読者%dの読者カードを作る日: %d-%d-%d", i + 1, day[i], month[i], year[i]);
+
+			//読者カードの満期日:
+			printf("\n読者%dの読者カードの満期日: %d-%d-%d\n", i + 1, Endofday[i], Endofmonth[i], Endofyear[i]);
+
+			flag = 1;
+		}
+	}
+	if (flag != 1)
+		printf("\n調べられない!!!");
+}
+/*-------------読者をカウント関数-------------*/
+//Input: 変数 m
+//Output: 読者の数量
+int RNums()
+{
+	int count = 0;
+	for (int i = 0; i < m; i++)
+	{
+		count++;
+	}
+	return count;
+}
