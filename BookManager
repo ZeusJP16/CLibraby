@@ -1,0 +1,407 @@
+#include "BookManager.h"
+
+//図書館の本の数量
+#define MaxB 1000
+
+//本を管理配列を初期化
+char 	ISBN[MaxB][30];
+char 	BName[MaxB][30];
+char 	Author[MaxB][30];
+char 	Kind[MaxB][30];
+char 	Price[MaxB][30];
+int 	Numbers[MaxB];
+
+//本の数量変数を初期化
+int s = 0;
+
+/*-------------本の最初情報を入力関数-------------*/
+//Input:ISBN[MaxB][30]; BName[MaxB][30]; Author[MaxB][30]; Kind[MaxB][30]; Price[MaxB][30];Numbers[MaxB];
+//Ouput:本の最初情報
+void BInput()
+{
+	while (true)
+	{
+		if (s >= MaxB)
+			printf("本の情報を入力の記憶が足りないです。!!");
+		else
+		while (s < MaxB)
+		{
+
+			printf("\n--------------------> 本%dの情報　<--------------------\n", s + 1);
+			fflush(stdin);
+
+			//本のISBNを入力:
+			printf("\n本%dのISBN: ", s + 1);
+			gets(ISBN[s]);
+
+			//本の名前を入力:
+			printf("本%dの名前: ", s + 1);
+			gets(BName[s]);
+
+			//本お作家を入力:
+			printf("本%dの作家: ", s + 1);
+			gets(Author[s]);
+
+			//本の種類を入力:
+			printf("本%dの種類: ", s + 1);
+			gets(Kind[s]);
+
+			//本の値段を入力:
+			printf("本%dの値段: ", s + 1);
+			gets(Price[s]);
+
+			//本の数量を入力:
+			printf("本%dの数量: ", s + 1);
+			scanf("%d", &Numbers[s]);
+
+			s++;
+			break;
+		}
+	}
+}
+
+/*-------------本の情報を示す関数-------------*/
+//Input:ISBN[MaxB][30]; BName[MaxB][30]; Author[MaxB][30]; Kind[MaxB][30]; Price[MaxB][30];Numbers[MaxB];
+//Output:本の最初情報
+void BCheck()
+{
+	if (s <= 0)
+	{
+		printf("データの中に、この本の情報がありません。本の情報を追加してください。\n");
+	}
+	else
+	{
+		int i = 0;
+		while (i < s)
+		{
+			printf("\n--------------------> 本%dの情報 <--------------------\n", i + 1);
+
+			//本のISBNを示す:
+			printf("\n本%dのISBN: ", i + 1);
+			puts(ISBN[i]);
+
+			//本の名前を示す:
+			printf("本%dの名前: ", i + 1);
+			puts(BName[i]);
+
+			//本お作家を示す:
+			printf("本%dの作家: ", i + 1);
+			puts(Author[i]);
+
+			//本の種類を示す:
+			printf("本%dの種類: ", i + 1);
+			puts(Kind[i]);
+
+			//本の数量を示す:
+			printf("本%dの値段: ", i + 1);
+			puts(Price[i]);
+
+			//本の数量を示す:
+			printf("本%dの数量: %d", i + 1, Numbers[i]);
+			i++;
+		}
+	}
+}
+
+/*-------------一つ本の情報を追加する関数-------------*/
+//Input:ISBN[MaxB][30]; BName[MaxB][30]; Author[MaxB][30];Kind[MaxB][30]; Price[MaxB][30];Numbers[MaxB];
+//Output:追加した本の情報
+void BAdd()
+{
+	while (true)
+	{
+		printf("\n=====================> 本を追加するメニュー <=====================\n");
+		printf("\t220.	追加おわり。\n");
+		printf("\t221.	本の情報を追加する。\n");
+		printf("\n==========================================================================\n");
+
+		int select;
+		printf("\nメーニュを選びなさい： ");
+		scanf("%d", &select);
+		if (select != 220 && select != 221)
+			printf("もう一度選びなさい!!!");
+
+		if (select == 220)
+			break;
+
+		if (select == 221)
+		{
+			if (s >= MaxB)
+				printf("本の情報を追加記憶が足りないです!!");
+			while (s < MaxB)
+			{
+
+				printf("\n--------------------> 本%dの情報 <--------------------", s + 1);
+				fflush(stdin);
+
+				//本のISBNを追加する:
+				printf("\n本%dのISBN: ", s + 1);
+				gets(ISBN[s]);
+
+				//本の名前を追加する:
+				printf("本%dの名前: ", s + 1);
+				gets(BName[s]);
+
+				//本の作家を追加する:
+				printf("本%dの作家: ", s + 1);
+				gets(Author[s]);
+
+				//本の種類を追加する:
+				printf("本%dの種類: ", s + 1);
+				gets(Kind[s]);
+
+				//本の値段を追加する:
+				printf("本%dの値段: ", s + 1);
+				gets(Price[s]);
+
+				//本の数量を追加する:
+				printf("本%dの数量: ", s + 1);
+				scanf("%d", &Numbers[s]);
+				s++;
+				break;
+			}
+		}
+	}
+}
+/*--------------------------------------------------------------------------------------------------------------------------------*/
+/*-------------本の情報を修正する関数-------------*/
+//Input:情報を修正したい本の順番(h)
+//Output:本の情報を修正したもの
+void BRepair(int h)
+{
+
+	if (h >= 0 && h <= s)
+	{
+		printf("\n=====================> 本の情報を修正するメニュー <=====================\n");
+		printf("\t231.	本のISBNを修正する。\n");
+		printf("\t232.	本の名前を修正する。\n");
+		printf("\t233.	本の作家を修正する。\n");
+		printf("\t234.	本の種類を修正する。\n");
+		printf("\t235.	本の値段を修正する。\n");
+		printf("\t236.	本の数量を修正する。\n");
+		printf("==========================================================================\n");
+
+		int select;
+		printf("\nメニューを選びなさい: ");
+		scanf("%d", &select);
+
+		if (select == 236)
+		{
+			int RNum;
+			printf("\n--------------------> 修正したい内容 <--------------------\n");
+			scanf("%d", &RNum);
+			Numbers[h - 1] = RNum;//本hの順番を確認する
+		}
+		else
+		{
+			fflush(stdin);
+			char repair[30];
+			printf("修正する情報を入力してください: ");
+			gets(repair);
+
+			switch (select)
+			{
+			case 231:
+				strcpy(ISBN[h - 1], repair);
+				break;
+			case 232:
+				strcpy(BName[h - 1], repair);
+				break;
+			case 233:
+				strcpy(Author[h - 1], repair);
+				break;
+			case 234:
+				strcpy(Kind[h - 1], repair);
+				break;
+			case 235:
+				strcpy(Price[h - 1], repair);
+				break;
+			default:
+				printf("選んだ修正内容が存在しません。他のオプシオンを選びなさい!!");
+				break;
+			}
+		}
+	}
+	else
+		printf("データが正しくないです。もう一度やり直してください!!");
+}
+/*-------------本の修正した情報を示す-------------*/
+
+//Input: 本の修正した情報を見たいものの番号 (h)
+//Output: 本の修正した情報
+void BRepaired(int h)
+{
+	printf("\n=====================> 本%dの修正した情報 <=====================\n", h);
+
+	//本のISBNを示す:
+	printf("\n本%dのISBN: ", h);
+	puts(ISBN[h - 1]);
+
+	//本の名前を示す:
+	printf("本%dの名前: ", h);
+	puts(BName[h - 1]);
+
+	//本の作家を示す:
+	printf("本%dの作家: ", h);
+	puts(Author[h - 1]);
+
+	//本の種類を示す:
+	printf("本%dの種類: ", h);
+	puts(Kind[h - 1]);
+
+	//本の値段を示す:
+	printf("本%dの値段: ", h);
+	puts(Price[h - 1]);
+
+	//本の数量を示す:
+	printf("本%dの数量: %d", h, Numbers[h - 1]);
+}
+
+/*-------------本の情報を消す関数-------------*/
+//Input:ISBN[MaxB][30]; BName[MaxB][30]; Author[MaxB][30]; Kind[MaxB][30]; Price[MaxB][30];Numbers[MaxB];
+//Output:一つの本の情報を消したもの
+void BDelete(int d)
+{
+	int flag = 0;
+	if (d >= 0 && d < s)
+	{
+		for (int i = d - 1; i < s - 1; i++)
+		{
+			strcpy(ISBN[i], ISBN[i + 1]);
+			strcpy(BName[i], BName[i + 1]);
+			strcpy(Author[i], Author[i + 1]);
+			strcpy(Kind[i], Kind[i + 1]);
+			strcpy(Price[i], Price[i + 1]);
+
+			Numbers[i] = Numbers[i + 1];
+		}
+		s--;
+		flag = 1;
+	}
+	if (flag == 1)
+	{
+		printf("\n===================> 本の消した後のリスト <===================\n");
+		BCheck();
+	}
+	else
+		printf("消すことが実施できません。もう一度やり直してください!!");
+}
+
+/*-------------ISBNで本を探す関数-------------*/
+//Input:探したい本のISBN
+//Output:探したい本の情報
+void SearchISBN(char isbn[25])
+{
+	int flag = 0;
+	for (int i = 0; i < s; i++)
+	{
+		if (strcmp(ISBN[i], isbn) == 0)
+		{
+			printf("\n=====================> 探したい本の情報 <=====================\n");
+			//本のISBNを示す:
+			printf("\n本%dのISBN: ", i + 1);
+			puts(ISBN[i]);
+
+			//本の名前を示す:
+			printf("本%dの名前: ", i + 1);
+			puts(BName[i]);
+
+			//本お作家を示す:
+			printf("本%dの作家: ", i + 1);
+			puts(Author[i]);
+
+			//本の種類を示す:
+			printf("本%dの種類: ", i + 1);
+			puts(Kind[i]);
+
+			//本の数量を示す:
+			printf("本%dの値段: ", i + 1);
+			puts(Price[i]);
+
+			//本の数量を示す:
+			printf("本%dの数量: ", i + 1, Numbers[i]);
+			
+			flag = 1;
+		}
+	}
+	if (flag != 1)
+		printf("\n探せません!!!");
+}
+/*-------------名前で本を探す関数-------------*/
+//Input:本の名前
+//Output:探したい本の情報
+void SearchName(char *BName[25])
+{
+	int flag = 0;
+	for (int i = 0; i < s; i++)
+	{
+		if (strcmp(BName[i], BName) == 0)
+		{
+			printf("\n=====================> 探したい本の情報 <=====================\n");
+			//本のISBNを示す:
+			printf("\n本%dのISBN: ", i + 1);
+			puts(ISBN[i]);
+
+			//本の名前を示す:
+			printf("本%dの名前: ", i + 1);
+			puts(BName[i]);
+
+			//本お作家を示す:
+			printf("本%dの作家: ", i + 1);
+			puts(Author[i]);
+
+			//本の種類を示す:
+			printf("本%dの種類: ", i + 1);
+			puts(Kind[i]);
+
+			//本の数量を示す:
+			printf("本%dの値段: ", i + 1);
+			puts(Price[i]);
+
+			//本の数量を示す:
+			printf("本%dの数量: %d", i + 1, Numbers[i]);
+
+
+			flag = 1;
+		}
+	}
+	if (flag != 1)
+		printf("\n探せません!!!");
+}
+
+/*-------------図書館の本の数量をカウント関数-------------*/
+//Input:s変数
+//Output:図書館の本の数量
+int BNum()
+{
+	int count = 0;
+	for (int i = 0; i < s; i++)
+	{
+		count = count + Numbers[i];
+	}
+	return count;
+}
+
+/*-------------種類で本の数量をカウント関数-------------*/
+//Input:変数s
+//Output:種類として本の数量
+void BKNum()
+{
+	int count = 0;
+	for (int i = 0; i < s; i++)
+	{
+		count = 0;
+		for (int j = 0; j < s; j++)
+		{
+			if (strcmp(Kind[i], Kind[j]) == 0)
+			{
+				if (i <= j)
+					count = count + Numbers[j];
+				else
+					break;
+			}
+		}
+		if (count != 0)
+			printf("種類%sは本の数量%d冊があります。\n", Kind[i], count);
+	}
+}
